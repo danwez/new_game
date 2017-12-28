@@ -5,7 +5,7 @@ var app = function(){
 	this.ctx = this.canvas.getContext('2d'); 
 	
 	var self = this;
-	this.hero = new Hero();
+	this.hero = new Hero(this);
 	this.init=function(){
 		
 		
@@ -21,9 +21,9 @@ var Hero = function(app){
 	
 	this.img = new Image();  // Create new img element
 	this.img.onload = function(){
-		app.ctx.drawImage(img, 50, 38, 50, 38);
+		app.ctx.drawImage(this.img, 50, 38, 50, 38);
 	};
-	this.img.src = '../girl.png';
+	this.img.src = '../images/girl.png';
 };
 
 
