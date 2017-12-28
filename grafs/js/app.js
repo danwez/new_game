@@ -3,31 +3,46 @@
 var app = function(){
 	this.canvas = document.getElementById('canvas');
 	this.ctx = this.canvas.getContext('2d'); 
-	
+
 	var self = this;
-	this.hero = new Hero(this);
+	self.hero = new Hero();
+	
+	this.getKey = function(){
+		
+	};
+	
 	this.init=function(){
 		
+		self.ctx.drawImage(self.hero.img, 0, 0, 70, 86, 0, 0, 35, 43);
+		document.body.onkeydown = function(e){ this.setKey(e.keyCode); };
+		document.body.onkeyUp = function(e){ this.setKey(null); };
+		//document.body.appendChild(self.hero.img);
+		// self.ctx.fillStyle = 'rgb(200, 0, 0)';
+		//self.ctx.fillRect(10, 10, 50, 50);
 		
-		self.ctx.fillStyle = 'rgb(200, 0, 0)';
-		self.ctx.fillRect(10, 10, 50, 50);
-
-		self.ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
-		self.ctx.fillRect(30, 30, 50, 50);
 	};
+	
 };
 
 var Hero = function(app){
 	
 	this.img = new Image();  // Create new img element
-	this.img.onload = function(){
-		app.ctx.drawImage(this.img, 50, 38, 50, 38);
+	this.img.src = './images/girl.png';
+	
+	this.position = [300,200];
+	this.speed = 0;
+	this.coorse = [0,0];
+	
+	this.move = function(){
+		this.position = [this.position[0] + this.speed * this.coorse[0], this.position[1] + this.speed * this.coorse[1]];
 	};
-	this.img.src = '../images/girl.png';
 };
 
 
 window.onload = function(){
 	var appp = new app();
 	appp.init();
+
+
+
 };
