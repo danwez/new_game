@@ -3,26 +3,60 @@
 var app = function(){
 	this.canvas = document.getElementById('canvas');
 	this.ctx = this.canvas.getContext('2d'); 
+	this.keyval = null;
 
 	var self = this;
-	self.hero = new Hero();
+	this.hero = new Hero();
+	
+	this.setKey = function(keyCode, on){
+		if(keyCode){
+			
+			switch(keyCode){
+				case 38: self.keyval = "up"
+			}
+			var p=document.getElementById("info");
+			p.innerText = keyCode;
+			
+		}else{
+			self.keyval = null;
+		}
+	};
 	
 	this.getKey = function(){
 		
 	};
 	
-	this.init=function(){
+	this.drawScreen = function(){
 		
+	};
+	
+	this.init=function(){
 		self.ctx.drawImage(self.hero.img, 0, 0, 70, 86, 0, 0, 35, 43);
-		document.body.onkeydown = function(e){ this.setKey(e.keyCode); };
-		document.body.onkeyUp = function(e){ this.setKey(null); };
+		self.ctx.drawImage(self.hero.img, 0, 0, 70, 86, 0, 0, 35, 43);
+		document.body.onkeydown = function(e){ self.setKey(e.keyCode,true); };
+		document.body.onkeyup = function(e){ self.setKey(e.keyCode,false); };
 		//document.body.appendChild(self.hero.img);
 		// self.ctx.fillStyle = 'rgb(200, 0, 0)';
 		//self.ctx.fillRect(10, 10, 50, 50);
+		window.requestAnimFrame(function(){
+			self.drawScreen();
+		}, self.canvas);
+		
 		
 	};
 	
 };
+
+window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       || 
+            window.webkitRequestAnimationFrame || 
+            window.mozRequestAnimationFrame    || 
+            window.oRequestAnimationFrame      || 
+            window.msRequestAnimationFrame     || 
+            function(/* function */ callback, /* DOMElement */ element){
+              window.setTimeout(callback, 1000 / 60);
+            };
+  })();
 
 var Hero = function(app){
 	
@@ -42,7 +76,4 @@ var Hero = function(app){
 window.onload = function(){
 	var appp = new app();
 	appp.init();
-
-
-
 };
